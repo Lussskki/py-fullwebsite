@@ -1,10 +1,14 @@
+# database.py
 from pymongo import MongoClient
 import logging
 import os
 
 async def db_connection():
     try:
-        mongodb_uri = os.getenv("MONGODB_URI")
+        mongodb_uri = os.getenv("mongodb_uri")
+        if mongodb_uri is None:
+            raise ValueError("MONGODB_URI environment variable not found")
+
         client = MongoClient(mongodb_uri)
         db = client.website
         if db is not None:

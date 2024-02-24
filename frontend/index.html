@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Form</title>
+</head>
+<body>
+    <h1>Input Name and Last Name</h1>
+    <form id="inputForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required><br><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById("inputForm").addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const name = document.getElementById("name").value;
+            const lastName = document.getElementById("lastName").value;
+            const response = await fetch('http://localhost:8000/item/', {  
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "name": name,
+                    "last": lastName
+                })
+            });
+            if (response.ok) {
+                const data = await response.json();
+                alert("Data inserted successfully. Inserted ID: " + data.inserted_id);
+            } else {
+                alert("Failed to insert data.");
+            }
+        });
+    </script>
+</body>
+</html>

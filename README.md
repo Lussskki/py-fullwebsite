@@ -23,10 +23,25 @@ This project demonstrates the integration between frontend and backend component
 5. Interact with the frontend to test CRUD operations.
 6. Report any issues or bugs encountered during usage.
 
-## Known Issues
+## Modules Used
 
-- The project is experiencing difficulties when deployed on GitHub Pages.
-- Additional testing and debugging are being performed to resolve these issues.
+- **dotenv:** Used for loading environment variables from a .env file.
+- **pymongo:** MongoDB driver for Python, used for interacting with MongoDB.
+- **fastapi:** A modern, fast (high-performance) web framework for building APIs with Python 3.7+.
+- **pydantic:** Data validation and settings management using Python type annotations.
+- **bson:** Binary JSON encoding format used by MongoDB.
+
+## Routes for CRUD App
+
+- **GET /items:** Retrieve all items from the database.
+- **GET /items/{id}:** Retrieve a specific item by ID.
+- **POST /items:** Create a new item.
+- **PUT /items/{id}:** Update an existing item by ID.
+- **DELETE /items/{id}:** Delete an item by ID.
+
+## Work in Progress (WIP)
+
+- **PUT Method:** Currently implementing the PUT method to update existing items in the database.
 
 ## Contributing
 
@@ -36,7 +51,3 @@ Contributions are welcome! Feel free to submit pull requests or open issues for 
 
 GitHub Pages itself is a static site hosting service and does not support server-side processing or dynamic content generation, including handling POST requests. 
 Therefore, you cannot directly use POST methods with GitHub Pages alone.
-
-## License
-
-This project is licensed under the MIT License.

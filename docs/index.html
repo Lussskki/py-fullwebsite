@@ -36,10 +36,10 @@
             if (response.ok) {
                 const data = await response.json();
                 alert("Data inserted successfully. Inserted ID: " + data.inserted_id);
+                changeColor();
             } else {
                 alert("Failed to insert data.");
             }
-            changeColor();
         });
     </script>
 </body>

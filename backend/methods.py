@@ -1,3 +1,4 @@
+from bson import ObjectId
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from database import db_connection
@@ -5,7 +6,7 @@ from database import db_connection
 router = APIRouter()
 
 class Item(BaseModel):
-    name: str
+    name: str  
     last: str
 
 @router.post("/item/")
@@ -24,18 +25,19 @@ async def post_item(item: Item):
             db.client.close()  
 
 @router.delete("/item/{item_id}")
-async def delete_item(item_id: int):
-    db = await db_connection()
-    if db is None:
-        raise HTTPException(status_code=500, detail="Failed to connect to database")
+async def delete_item(item_id: str):
     try:
-        result = db.test.delete_one({"_id": item_id})  
+        db = await db_connection()
+        if db is None:
+            raise HTTPException(status_code=500, detail="Failed to connect to database")
+        item_id_obj = ObjectId(item_id)
+        result = db.test.delete_one({"_id": item_id_obj})  # Use the ObjectId
         if result.deleted_count == 1:
             return {"message": "Item deleted successfully"}
         else:
             raise HTTPException(status_code=404, detail="Item not found")
     except Exception as e:
-        raise HTTPException(status_code=500, detail="Failed to delete")
+        raise HTTPException(status_code=500, detail="Failed to delete item")
     finally:
         if db is not None:
             db.client.close()

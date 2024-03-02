@@ -10,7 +10,7 @@ class Item(BaseModel):
     name: str  
     last: str
 
-# get method only for testing in postman yet
+# get method only for testing in postman, yet
 @router.get("/")
 async def get_item():
     try:
@@ -27,7 +27,10 @@ async def get_item():
         if db is not None:
             db.client.close()
 
-
+# working on put method
+@router.put("/item/{item_id}")
+async def put_item(item: Item):
+    pass
 
 @router.post("/item/")
 async def post_item(item: Item):

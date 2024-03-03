@@ -4,6 +4,7 @@ from pydantic import BaseModel
 from database import db_connection
 import os
 
+
 router = APIRouter()
 
 class Item(BaseModel):
@@ -11,7 +12,7 @@ class Item(BaseModel):
     last: str
 
 # get method only for testing in postman, yet
-@router.get("/")
+@router.get("/it")
 async def get_item():
     try:
         db = await db_connection()
@@ -27,10 +28,16 @@ async def get_item():
         if db is not None:
             db.client.close()
 
-# working on put method
-@router.put("/item/{item_id}")
-async def put_item(item: Item):
+# working on put method, that is issue, not working trying to debug 
+@router.put("/item/{object_id}")
+async def put_item(object_id: str, item_data: Item):
     pass
+
+
+
+
+
+
 
 @router.post("/item/")
 async def post_item(item: Item):

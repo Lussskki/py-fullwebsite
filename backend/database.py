@@ -17,5 +17,6 @@ async def db_connection():
             logging.error("Database connection error")
             return None
     except Exception as e:
+        
         logging.error("Error connecting to database: %s", e)
         return None

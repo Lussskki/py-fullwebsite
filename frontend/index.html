@@ -36,7 +36,7 @@
                 </article>
                 <button class="delete-item-btn">Delete</button>
                 </div>
-            `;
+            `
             return li
         }
         function addItemToList(item) {
@@ -49,7 +49,7 @@
                     const itemId = item.id
                     const response = await fetch(`http://localhost:8000/item/${itemId}`, {
                         method: 'DELETE'
-                    });
+                    })
                     if (response.ok) {
                         newItemElement.remove()
                         removeFromLocalStorage(itemId)
@@ -83,7 +83,7 @@
             } else {
                 alert("Failed to insert data.")
             }
-        });
+        })
         function saveToLocalStorage(item) {
             let storedItems = localStorage.getItem('items')
             storedItems = storedItems ? JSON.parse(storedItems) : []

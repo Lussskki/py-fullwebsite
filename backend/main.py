@@ -18,7 +18,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app.mount("/static", StaticFiles(directory="frontend"), name="static")
+app.mount("/frontend", StaticFiles(directory="frontend"), name="static")
 
 @app.get("/", response_class=HTMLResponse)
 async def serve_index():
@@ -29,6 +29,10 @@ async def serve_index():
 @app.get("/style.css")
 async def serve_css():
     return FileResponse("frontend/style.css", media_type="text/css")
+
+@app.get("/favicon.ico", include_in_schema= False)
+async def serve_favicon():
+    return FileResponse("frontend/favicon.ico", media_type="image/x-icon")
 
 app.include_router(router)
 

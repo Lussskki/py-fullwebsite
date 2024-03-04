@@ -12,7 +12,7 @@ class Item(BaseModel):
     name: str  
     last: str
 
-# get method only for testing in postman, yet
+# get method only for testing in postman
 @router.get("/it")
 async def get_item():
     try:
@@ -28,8 +28,8 @@ async def get_item():
     finally:
         if db is not None:
             db.client.close()
-
-# working on put method, that is issue, not working trying to debug 
+ 
+# working on put method, that is issue, not working trying to debug. now have error 
 @router.put("/item/{item_id}")            
 async def update_item(item_id: str, item_data: dict):
     try:
@@ -52,12 +52,7 @@ async def update_item(item_id: str, item_data: dict):
         if db is not None:
             db.client.close()
 
-
-
-
-
-
-
+# create method from front to database
 @router.post("/item/")
 async def post_item(item: Item):
     db = await db_connection()
@@ -73,6 +68,7 @@ async def post_item(item: Item):
         if db is not None:  
             db.client.close()  
 
+# delete method from database
 @router.delete("/item/{item_id}")
 async def delete_item(item_id: str):
     try:

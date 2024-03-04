@@ -1,5 +1,6 @@
 from bson import ObjectId
 from fastapi import APIRouter, HTTPException
+from fastapi import Header
 from pydantic import BaseModel
 from database import db_connection
 import os
@@ -29,9 +30,27 @@ async def get_item():
             db.client.close()
 
 # working on put method, that is issue, not working trying to debug 
-@router.put("/item/{object_id}")
-async def put_item(object_id: str, item_data: Item):
-    pass
+@router.put("/item/{item_id}")            
+async def update_item(item_id: str, item_data: dict):
+    try:
+        db = await db_connection()
+        if db is None:
+            raise HTTPException(status_code=500, detail="Failed to connect to database")
+        
+        item_id_obj = ObjectId(item_id)
+        result = await db.test.update_one({"_id": item_id_obj}, {"$set": item_data})
+        
+        if result.modified_count == 1:
+            return {"message": "Item updated successfully"}
+        else:
+            raise HTTPException(status_code=404, detail="Item not found")
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to update item, Error: {str(e)}")
+    finally:
+        if db is not None:
+            db.client.close()
 
 
 
